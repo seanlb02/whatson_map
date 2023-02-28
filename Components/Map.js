@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {Icon} from 'leaflet'
+import Recenter from './Recenter'
 
 import { Sidebar_props } from "../context/context";
 import { useContext } from "react";
@@ -32,17 +33,21 @@ const MBC = {
 
 }
 
-const initialPosition = [-33.8832, 151.2070]
+
 
 
 
 export default function Map() {
 
+  
+
     const {sidebarprops, setSidebarprops} = useContext(Sidebar_props)
     const [filter, setFilter] = useState("")
     const [eventsArray, setEventsArray] = useState([])
 
-    
+    const [Position, setPosition] = useState([-33.8832, 151.2070])
+    const [zoom, setZoom] = useState(13)
+
     const geolocationAPI = navigator.geolocation;
     const [lat, setLat] = useState("");
     const [long, setLong] = useState("");
@@ -81,6 +86,7 @@ export default function Map() {
 
 return (
     <div className={styles.pageContainer}>
+
         <div className={styles.filterReel}>
             <div className={styles.logo} onClick={() => setFilter("Rock")}>Rock</div>
             <div className={styles.logo} onClick={() => setFilter("Pop")}>Pop</div>
@@ -91,17 +97,20 @@ return (
             <div className={styles.logo} onClick={() => setFilter("Soul")}>Soul/Funk</div>
             <div className={styles.logo} onClick={() => setFilter("Comedy")}>Comedy</div>
         </div>
+        
+        <div className={styles.myLocation} onClick={() => {setPosition([lat, long]); setZoom(16)}}><Image src='/location.png' height={30} width={30} /></div>
 
         <div className={styles.mainLogo}><Image src='/dayof_logo.png' height={50} width={100}/></div>
 
-        <MapContainer attributionControl={false}  center={initialPosition || [lat, long]} zoom={13} scrollWheelZoom={false}>
+        <MapContainer attributionControl={false}  center={Position || [lat, long]} zoom={zoom} scrollWheelZoom={false}>
+            <Recenter center={Position} zoom={zoom}/>
             <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
 
             {/* display user location if switched */}
-            <Marker position={[lat, long]} icon={new Icon({iconUrl: '/location.png', iconSize: [25, 25], iconAnchor: [12, 41]})}>
+            <Marker position={[lat, long]} icon={new Icon({iconUrl: '/location2.png', iconSize: [25, 25], iconAnchor: [12, 41]})}>
 
             </Marker>
 
@@ -128,11 +137,12 @@ return (
 ) 
 }
 const styles = {
-    filterReel: "flex gap-2 no-scrollbar absolute bg-transparent bottom-10 left-0 right-0 z-50 overflow-x-scroll md:justify-center items-center px-2",
+    filterReel: " font-text flex gap-2 no-scrollbar absolute bg-transparent bottom-10 left-0 right-0 z-50 overflow-x-scroll md:justify-center items-center px-2",
     logo: "cursor-pointer text-md w-fit rounded-full bg-white px-5 py-1 border-1 shadow-md my-2 border-black",
     mainLogo: "bg-transparent absolute top-5 right-10 md:right-16 z-50 h-contain w-contain",
     pageContainer: "relative h-contain lg:w-[75vw] sm:w-[100vw]",
     popupTitle: "text-xl",
-    popupLink: "text-md pt-5"
+    popupLink: "text-md pt-5",
+    myLocation: "rounded-full p-1 absolute z-50 bottom-24 right-8 md:right-20 bg-white cursor-pointer",
 }
 

@@ -39,7 +39,7 @@ export default function Sidebar({venue, name, artist, time, price, bio, link}) {
 }
 
 const styles = {
-    pageContainer: "flex flex-col h-auto border-l-2 lg:w-[25vw] lg:h-contain text-center p-5",
+    pageContainer: "flex font-text flex-col h-auto border-l-2 lg:w-[25vw] lg:h-contain text-center p-5",
     Title: "w-full h-auto text-2xl",
     buttonContainer: "flex items-center justify-center gap-8 mt-8 pb-8 border-b-2", 
     button: "rounded-full bg-blue-300 text-white p-2 px-5 items-center align-center text-center pb-2",

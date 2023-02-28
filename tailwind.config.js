@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      text: ['IBM Plex Sans', 'sans-serif'],
+    },
   },
   plugins: [],
 }
