@@ -16,7 +16,7 @@ const Map = dynamic(
 )
 
 
-export default function Home() {
+export default function Home() {  
 
   const {sidebarprops} = useContext(Sidebar_props)
 
@@ -31,13 +31,12 @@ export default function Home() {
 
 
       <Map className={styles.map}/>
-        <div className={styles.sidebarContainer}>
-          <Sidebar className={styles.sidebar} venue={sidebarprops.venue} name={sidebarprops.name} bio={sidebarprops.bio} link={sidebarprops.link}/>
-         
-        </div>
+      <div className={styles.sidebarContainer}>
+          <Sidebar className={styles.sidebar} venue={sidebarprops.venue} name={sidebarprops.name} artist={sidebarprops.artist} time={sidebarprops.time} price={sidebarprops.price} bio={sidebarprops.bio} link={sidebarprops.link}/>
+      </div>
     </div>
   )
-}
+} 
 
 const styles = {
   pageContainer: "flex flex-col lg:flex lg:flex-row w-[100vw] h-[100vh]",

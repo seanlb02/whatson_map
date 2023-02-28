@@ -8,6 +8,8 @@ import { useContext } from "react";
 import { useRouter } from "next/router";
 
 
+
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
@@ -16,14 +18,16 @@ const MBC = {
     type: "Feature",
     geometry: {
         type: "point",
-        coordinates: [-33.91264495487523, 151.17839381534336]
+        coordinates: [-33.91318, 151.17835]
     },
     properties: {
         venue_name: 'House of Music and Booze',
-        event_name: 'charli cxc',
+        event_name: 'Event name',
+        artists: 'band 1, band 2, band 3',
         genre: 'pop',
         price: 'Free',
-        bio: 'good singer playing in sydney pub'
+        time: '7:30',
+        bio: 'A good band playing in sydney pub'
     }
 
 }
@@ -37,6 +41,11 @@ export default function Map() {
     const {sidebarprops, setSidebarprops} = useContext(Sidebar_props)
     const [filter, setFilter] = useState("")
     const [eventsArray, setEventsArray] = useState([])
+
+    
+    const geolocationAPI = navigator.geolocation;
+    const [lat, setLat] = useState("");
+    const [long, setLong] = useState("");
     
 // render markers for each GEOJSON object in fetched array 
     const renderVenues = function() {
@@ -52,11 +61,23 @@ export default function Map() {
                                     }})
     }
 
-    // useEffect(() => {
+    useEffect(() => {
 
     // getEvents().then((data) => {setEventsArray(data)})
 
-    // },[])
+    
+        if (!geolocationAPI) {
+          alert('Turn location on')
+        } else {
+          geolocationAPI.getCurrentPosition((position) => {
+            const { coords } = position;
+            setLat(coords.latitude);
+            setLong(coords.longitude);
+          }, (error) => {
+            setError('Something went wrong getting your position!')
+          })
+        }
+    },[])
 
 return (
     <div className={styles.pageContainer}>
@@ -73,16 +94,24 @@ return (
 
         <div className={styles.mainLogo}><Image src='/dayof_logo.png' height={50} width={100}/></div>
 
-        <MapContainer attributionControl={false}  center={initialPosition} zoom={13} scrollWheelZoom={false}>
+        <MapContainer attributionControl={false}  center={initialPosition || [lat, long]} zoom={13} scrollWheelZoom={false}>
             <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
 
+            {/* display user location if switched */}
+            <Marker position={[lat, long]} icon={new Icon({iconUrl: '/location.png', iconSize: [25, 25], iconAnchor: [12, 41]})}>
+
+            </Marker>
+
             <Marker 
                 eventHandlers={{click: (e) => 
                     {setSidebarprops({venue: MBC.properties.venue_name, 
                                     name: MBC.properties.event_name,
+                                    artist: MBC.properties.artists,
+                                    time: MBC.properties.time,
+                                    price: MBC.properties.price,
                                     bio: MBC.properties.bio,
                                     link: 'https://oztix.com.au'})}}
                     } 
@@ -99,7 +128,7 @@ return (
 )
 }
 const styles = {
-    filterReel: "flex gap-2 no-scrollbar absolute bg-transparent bottom-10 left-0 right-0 z-50 overflow-x-scroll md:justify-center items-center",
+    filterReel: "flex gap-2 no-scrollbar absolute bg-transparent bottom-10 left-0 right-0 z-50 overflow-x-scroll md:justify-center items-center px-2",
     logo: "cursor-pointer text-md w-fit rounded-full bg-white px-5 py-1 pb-2 border-1 shadow-md my-2 border-black",
     mainLogo: "bg-transparent absolute top-5 right-16 z-50 h-contain w-contain",
     pageContainer: "relative h-contain lg:w-[75vw] sm:w-[100vw]",

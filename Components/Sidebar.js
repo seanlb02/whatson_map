@@ -6,7 +6,7 @@ import Info from './Info'
 
 
 
-export default function Sidebar({venue, name, bio, link}) {
+export default function Sidebar({venue, name, artist, time, price, bio, link}) {
 
     const [showEvent, setShowEvent] = useState(true)
     const [showPlaylist, setShowPlaylist] = useState(false)
@@ -22,11 +22,14 @@ export default function Sidebar({venue, name, bio, link}) {
 
             <section className={styles.infoContainer}>
                 <div className={styles.eventName}>{name}</div>
+                <div className={styles.artists}>{artist}</div>
+                    <div>
+                        {time ? <div className={styles.span}>{price} | {time}</div> : <></>}
+                    </div>
                 <div className={styles.eventBio}>{bio}</div>
-                {link ? <a className={styles.link} href={link}>Go to event page</a> : <></>}
+                {link ? <div className={styles.link}><Image src='/link_icon.png' height={20} width={25}/><a href={link}>More Info</a></div> : <></>}
             </section>
            
-            
             
             {/* info component is conditionally rendered to be passed dynamic props set by state with event/playlist 'onClicks' */}
             {/* <Info venue ="MBC" name="Event name here" event="something somethig " /> */}
@@ -40,10 +43,12 @@ const styles = {
     Title: "w-full h-auto text-2xl",
     buttonContainer: "flex items-center justify-center gap-8 mt-8 pb-8 border-b-2", 
     button: "rounded-full bg-blue-300 text-white p-2 px-5 items-center align-center text-center pb-3",
-    infoContainer: "flex flex-col items-center justify-center",
-    eventName: "text-3xl p-4 mb-3",
+    infoContainer: "flex flex-col pt-3 px-2 text-left",
+    eventName: "text-3xl py-3 mb-1",
     eventBio: "text-justify",
-    link: "text-xl text-red-300 mt-12"
+    artists: "text-2xl italic font-bold",
+    span: "flex text-lg text-slate-400 my-6",
+    link: "text-md font-bold text-black mt-12 flex gap-1"
 }
 
 
