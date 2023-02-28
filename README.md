@@ -15,4 +15,4 @@ Expected mongoDB API integration coming soon
 
 Get a feel of the UI by navigating the app on desktop and mobiel and click on the test venue - (Sydney's House of Music and Booze [St Peters])
 
-[preview](/)
+[preview](https://playlist-map.vercel.app)
