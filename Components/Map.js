@@ -125,12 +125,12 @@ return (
 
 
     </div>
-)
+) 
 }
 const styles = {
     filterReel: "flex gap-2 no-scrollbar absolute bg-transparent bottom-10 left-0 right-0 z-50 overflow-x-scroll md:justify-center items-center px-2",
-    logo: "cursor-pointer text-md w-fit rounded-full bg-white px-5 py-1 pb-2 border-1 shadow-md my-2 border-black",
-    mainLogo: "bg-transparent absolute top-5 right-16 z-50 h-contain w-contain",
+    logo: "cursor-pointer text-md w-fit rounded-full bg-white px-5 py-1 border-1 shadow-md my-2 border-black",
+    mainLogo: "bg-transparent absolute top-5 right-10 md:right-16 z-50 h-contain w-contain",
     pageContainer: "relative h-contain lg:w-[75vw] sm:w-[100vw]",
     popupTitle: "text-xl",
     popupLink: "text-md pt-5"
