@@ -8,7 +8,7 @@ import { Sidebar_props } from "../context/context";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 
-
+import { getEvents } from '@/Services/DailyEventsFetch'
 
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -68,7 +68,7 @@ export default function Map() {
 
     useEffect(() => {
 
-    // getEvents().then((data) => {setEventsArray(data)})
+    getEvents().then((data) => {setEventsArray(data)})
 
     
         if (!geolocationAPI) {
@@ -100,14 +100,13 @@ return (
         
         <div className={styles.myLocation} onClick={() => {setPosition([lat, long]); setZoom(16)}}><Image src='/location.png' height={30} width={30} /></div>
 
-        <div className={styles.mainLogo}><Image src='/dayof_logo.png' height={50} width={100}/></div>
+        <div className={styles.mainLogo} onClick={() => {setPosition([-33.8832, 151.2070]); setZoom(13)}}><Image src='/dayof_logo.png' height={50} width={100}/></div>
 
         <MapContainer attributionControl={false}  center={Position || [lat, long]} zoom={zoom} scrollWheelZoom={false}>
             <Recenter center={Position} zoom={zoom}/>
             <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-
 
             {/* display user location if switched */}
             <Marker position={[lat, long]} icon={new Icon({iconUrl: '/location2.png', iconSize: [25, 25], iconAnchor: [12, 41]})}>
