@@ -42,7 +42,7 @@ export default function Map() {
   
 
     const {sidebarprops, setSidebarprops} = useContext(Sidebar_props)
-    const [filter, setFilter] = useState("")
+    const [filter, setFilter] = useState("Rock")
     const [eventsArray, setEventsArray] = useState([])
 
     const [Position, setPosition] = useState([-33.8832, 151.2070])
@@ -54,22 +54,32 @@ export default function Map() {
     
 // render markers for each GEOJSON object in fetched array 
     const renderVenues = function() {
-        eventsArray.map(venue => {if(venue.properties.genre == `${filter}`)
-                                    {
-                                        return(
-                                        <Marker onClick={() => console.log("hello")} position={venue.geometry.coordinates} icon={new Icon({iconUrl: '/favicon.ico', iconSize: [20, 20], iconAnchor: [12, 41]})} >  
-                                            <Popup>
-                                                {venue.properties.venue_name} <br /> [Picture here]  <br /> <strong><a target="_blank" href={`https://www.google.com/maps/search/${venue.properties.venue_name}`}>Get directions</a></strong> 
-                                            </Popup>
-                                        </Marker>
-                                        )
-                                    }})
+        console.log(JSON.stringify(filter))
+        
+        eventsArray.map(venue => {if (JSON.stringify(venue.properties.genre) == JSON.stringify(filter)) 
+                                    
+                                       
+                                            return 
+                                            <div>hello</div>
+                                        // <Marker onClick={() => console.log("hello")} position={venue.geometry.coordinates} icon={new Icon({iconUrl: '/favicon.ico', iconSize: [20, 20], iconAnchor: [12, 41]})} >  
+                                        //     <Popup>
+                                        //         {venue.properties.venue_name} <br /> [Picture here]  <br /> <strong><a target="_blank" href={`https://www.google.com/maps/search/${venue.properties.venue_name}`}>Get directions</a></strong> 
+                                        //     </Popup>
+                                        // </Marker>
+                                            
+        
+                                
+                                    
+    })
     }
+                                        
+                                
+    
 
     useEffect(() => {
 
     getEvents().then((data) => {setEventsArray(data)})
-
+    
     
         if (!geolocationAPI) {
           alert('Turn location on')
@@ -96,6 +106,7 @@ return (
             <div className={styles.logo} onClick={() => setFilter("Country")}>Country</div>
             <div className={styles.logo} onClick={() => setFilter("Soul")}>Soul/Funk</div>
             <div className={styles.logo} onClick={() => setFilter("Comedy")}>Comedy</div>
+            
         </div>
         
         <div className={styles.myLocation} onClick={() => {setPosition([lat, long]); setZoom(16)}}><Image src='/location.png' height={30} width={30} /></div>
@@ -128,7 +139,21 @@ return (
                         <div className={styles.popupTitle}>{MBC.properties.venue_name}</div> <br /> <div> <Image src='/mbc_image.jpeg' height={120} width={300}/> </div> <br /> <strong><a className={styles.popupLink} target="_blank" href={`https://www.google.com/maps/search/${MBC.properties.venue_name}`}>Get directions</a></strong> 
                     </Popup>
             </Marker>
-            {renderVenues}
+            {eventsArray.map(venue => {if (JSON.stringify(venue.properties.genre) == JSON.stringify(filter)) 
+                                    
+                                       
+                              
+                                return <Marker onClick={() => console.log("hello")} position={venue.geometry.coordinates} icon={new Icon({iconUrl: '/favicon.ico', iconSize: [20, 20], iconAnchor: [12, 41]})} >  
+                                //     <Popup>
+                                //         <div className={styles.popupTitle}>{venue.properties.venue_name}</div> <br /> [Picture here]  <br /> <strong><a target="_blank" href={`https://www.google.com/maps/search/${venue.properties.venue_name}`}>Get directions</a></strong> 
+                                //     </Popup>
+                                // </Marker>
+                                    
+
+                        
+                            
+})}
+            
         </MapContainer>
 
 
