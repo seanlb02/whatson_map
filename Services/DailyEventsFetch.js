@@ -9,3 +9,6 @@ export async function getEvents() {
      })
      return res.json()
 }
+
+
+

@@ -78,7 +78,7 @@ export default function Map() {
 
     useEffect(() => {
 
-    getEvents().then((data) => {setEventsArray(data)})
+    // getEvents().then((data) => {setEventsArray(data)})
     
     
         if (!geolocationAPI) {
@@ -109,7 +109,7 @@ return (
             
         </div>
         
-        <div className={styles.myLocation} onClick={() => {setPosition([lat, long]); setZoom(16)}}><Image src='/location.png' height={30} width={30} /></div>
+        <div className={styles.myLocation} onClick={() => {setPosition([lat, long]); setZoom(17)}}><Image src='/location.png' height={30} width={30} /></div>
 
         <div className={styles.mainLogo} onClick={() => {setPosition([-33.8832, 151.2070]); setZoom(13)}}><Image src='/dayof_logo.png' height={50} width={100}/></div>
 
@@ -120,7 +120,7 @@ return (
             />
 
             {/* display user location if switched */}
-            <Marker position={[lat, long]} icon={new Icon({iconUrl: '/location2.png', iconSize: [25, 25], iconAnchor: [12, 41]})}>
+            <Marker position={[lat, long]} icon={new Icon({iconUrl: '/location2.png', iconSize: [25, 25], iconAnchor: [12, 25]})}>
 
             </Marker>
 
@@ -132,9 +132,12 @@ return (
                                     time: MBC.properties.time,
                                     price: MBC.properties.price,
                                     bio: MBC.properties.bio,
-                                    link: 'https://oztix.com.au'})}}
+                                    link: 'https://oztix.com.au'});
+                    setPosition(MBC.geometry.coordinates)}
+                                
+                                }
                     } 
-                position={MBC.geometry.coordinates} icon={new Icon({iconUrl: '/favicon.ico', iconSize: [20, 20], iconAnchor: [12, 41]})} >  
+                position={MBC.geometry.coordinates} icon={new Icon({iconUrl: '/favicon.ico', iconSize: [20, 20], iconAnchor: [10, 20]})} >  
                     <Popup>
                         <div className={styles.popupTitle}>{MBC.properties.venue_name}</div> <br /> <div> <Image src='/mbc_image.jpeg' height={120} width={300}/> </div> <br /> <strong><a className={styles.popupLink} target="_blank" href={`https://www.google.com/maps/search/${MBC.properties.venue_name}`}>Get directions</a></strong> 
                     </Popup>
@@ -143,7 +146,7 @@ return (
                                     
                                        
                               
-                                return <Marker onClick={() => console.log("hello")} position={venue.geometry.coordinates} icon={new Icon({iconUrl: '/favicon.ico', iconSize: [20, 20], iconAnchor: [12, 41]})} >  
+                                return <Marker onClick={() => console.log("hello")} position={venue.geometry.coordinates} icon={new Icon({iconUrl: '/favicon.ico', iconSize: [20, 20], iconAnchor: [10, 20]})} >  
                                 //     <Popup>
                                 //         <div className={styles.popupTitle}>{venue.properties.venue_name}</div> <br /> [Picture here]  <br /> <strong><a target="_blank" href={`https://www.google.com/maps/search/${venue.properties.venue_name}`}>Get directions</a></strong> 
                                 //     </Popup>
